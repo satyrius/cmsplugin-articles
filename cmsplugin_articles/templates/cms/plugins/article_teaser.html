@@ -1,4 +1,10 @@
+{% load thumbnail %}
 <div class="article">
   <time datetime="{{ article.published_at|date:"Y-m-d" }}">{{ article.published_at|date:"d.m.Y" }}</time>
   <h2>{{ article.title }}</h2>
+  {% if article.image %}
+    {% thumbnail article.image 430x320 crop as image %}
+    <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" />
+  {% endif %}
+  {{ article.teaser|safe }}
 </div>

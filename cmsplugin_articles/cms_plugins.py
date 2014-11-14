@@ -56,9 +56,14 @@ class ArticlesPlugin(CMSPluginBase):
                 pass
             else:
                 # TODO Move this out from view class (e.g. to templatetags)
-                soup = BeautifulSoup(content.render(request_context, None), 'html.parser')
-                paragraphs = u''.join([unicode(p.string) for p in soup.find_all('p')])
-                cut = re.sub(r'<(?:/(?:\w+)?)?$', '', paragraphs[:settings.TEASER_CUT]) + u'... ' + more
+                soup = BeautifulSoup(
+                    content.render(request_context, None),
+                    'html.parser')
+                paragraphs = u''.join([
+                    unicode(p.string) for p in soup.find_all('p')])
+                cut = re.sub(
+                    r'<(?:/(?:\w+)?)?$', '',
+                    paragraphs[:settings.TEASER_CUT]) + u'... ' + more
                 data['teaser'] = unicode(BeautifulSoup(cut, 'html.parser'))
                 # Look for article headers
                 headers = soup.find_all('h1', limit=1)

@@ -10,8 +10,16 @@ class ArticlesPlugin(CMSPluginBase):
     name = _('Articles Plugin')
     render_template = 'cms/plugins/articles.html'
 
-    def get_articles(self, request):
-        return request.current_page.get_children().order_by('-creation_date')
+    def get_articles_paginator(self, request, instance):
+        articles = request.current_page.get_children().order_by(
+            '-creation_date')
+        return self.get_paginator(request, articles, instance.limit)
+
+    def get_page_number(self, request):
+        try:
+            return int(request.GET.get('page', 1))
+        except ValueError:
+            return 1
 
     def get_article_data(self, page):
         data = {
@@ -21,12 +29,17 @@ class ArticlesPlugin(CMSPluginBase):
         return data
 
     def render(self, context, instance, placeholder):
+        request = context['request']
+        paginator = self.get_articles_paginator(request, instance)
+        page = paginator.page(self.get_page_number(request))
         articles = [
-            self.get_article_data(page)
-            for page in self.get_articles(context['request'])
+            self.get_article_data(article)
+            for article in page.object_list
         ]
         context.update({
             'instance': instance,
+            'paginator': paginator,
+            'page_obj': page,
             'articles': articles,
         })
         return context

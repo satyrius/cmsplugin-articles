@@ -1,7 +1,7 @@
 {% load article_tags thumbnail %}
 <div class="article">
   {% block teaser_head %}
-    <time datetime="{{ article.published_at|date:"Y-m-d" }}">{{ article.published_at|date:"d.m.Y" }}</time>
+    <time datetime="{{ article|published_at|date:"Y-m-d" }}">{{ article|published_at|date:"d.m.Y" }}</time>
     <h2>{{ article|article_title }}</h2>
   {% endblock %}
 

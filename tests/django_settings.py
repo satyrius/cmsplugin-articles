@@ -1,3 +1,7 @@
+from os import path
+
+BASE_DIR = path.dirname(__file__)
+
 LANGUAGE_CODE = 'en'
 SECRET_KEY = 'ji2r2iGkZqJVbWDhXrgDKDR2qG#mmtvBZXPXDugA4H)KFLwLHy'
 SITE_ID = 1
@@ -19,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django_nose',
     'cms',
+    'menus',
     'mptt',
     'south',
     'cmsplugin_articles',
@@ -26,4 +31,12 @@ INSTALLED_APPS = [
 
 TEMPLATE_CONTEXT_PROCESSORS = [
     'django.core.context_processors.request',
+]
+
+TEMPLATE_DIRS = [
+    path.join(BASE_DIR, 'templates'),
+]
+
+CMS_TEMPLATES = [
+    ('dummy.html', 'Dummy'),
 ]

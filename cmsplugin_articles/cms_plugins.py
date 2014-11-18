@@ -78,15 +78,11 @@ class ArticlesPlugin(CMSPluginBase):
         request = context['request']
         paginator = self.get_articles_paginator(request, instance)
         page = paginator.page(self.get_page_number(request))
-        articles = [
-            self.get_article_data(article, request)
-            for article in page.object_list
-        ]
         context.update({
             'instance': instance,
             'paginator': paginator,
             'page_obj': page,
-            'articles': articles,
+            'articles': page.object_list,
         })
         return context
 

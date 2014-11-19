@@ -5,7 +5,7 @@ register = template.Library()
 
 
 @register.filter()
-def article_title(article_page):
+def teaser_title(article_page):
     try:
         teaser = article_page.teaserextension
     except TeaserExtension.DoesNotExist:

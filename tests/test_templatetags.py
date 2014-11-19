@@ -23,14 +23,14 @@ class TemplatetagsTest(TestCase):
     def test_article_title(self):
         title = 'Ajani, Mentor of Heroes'
         page = self._create_page(title)
-        res = self._render('{{ page|article_title }}', page=page).strip()
+        res = self._render('{{ page|teaser_title }}', page=page).strip()
         self.assertEqual(res, title)
 
         short_title = 'Ajani'
         TeaserExtension.objects.create(
             extended_object=page,
             title=short_title)
-        res = self._render('{{ page|article_title }}', page=page).strip()
+        res = self._render('{{ page|teaser_title }}', page=page).strip()
         self.assertEqual(res, short_title)
 
     @freeze_time('2008-09-02')

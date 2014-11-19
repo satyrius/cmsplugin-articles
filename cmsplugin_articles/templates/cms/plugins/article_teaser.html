@@ -2,7 +2,7 @@
 <div class="article">
   {% block teaser_head %}
     <time datetime="{{ article|published_at|date:"Y-m-d" }}">{{ article|published_at|date:"d.m.Y" }}</time>
-    <h2>{{ article|article_title }}</h2>
+    <h2>{{ article|teaser_title }}</h2>
   {% endblock %}
 
   {% block teaser_body %}

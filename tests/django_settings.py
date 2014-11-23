@@ -10,6 +10,8 @@ SOUTH_TESTS_MIGRATE = True
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--nologcapture']
 
+MEDIA_ROOT = '/tmp/cmsplugin-articles/'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

@@ -1,5 +1,7 @@
+import base64
 import datetime as dt
 from cms.api import create_page
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.template import Template, Context
 from django.test import TestCase
 from freezegun import freeze_time
@@ -47,3 +49,43 @@ class TemplatetagsTest(TestCase):
         page.save()
         res = self._render(template, page=page).strip()
         self.assertEqual(res, '2008-09-03')
+
+    def test_teaser_image(self):
+        page = self._create_page('Satyrius')
+        template = '''
+            {% with page|teaser_image as img %}
+                {{ img.url }}
+            {% endwith %}
+        '''
+        res = self._render(template, page=page).strip()
+        self.assertEqual(res, '')
+
+        content = base64.decodestring(IMAGE)
+        img = SimpleUploadedFile('me.jpeg', content, content_type='image/jpeg')
+        teaser = TeaserExtension.objects.create(
+            extended_object=page, image=img)
+
+        res = self._render(template, page=page).strip()
+        self.assertEqual(res, teaser.image.url)
+
+
+IMAGE = \
+    r'/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZy' \
+    r'BJSkcgSlBFRyB2ODApLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUE' \
+    r'BAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBA' \
+    r'QFBAUJBQUJFA0LDRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU' \
+    r'FBQUFBQUFBQU/8AAEQgAFAAUAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAg' \
+    r'MEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGh' \
+    r'CCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZG' \
+    r'VmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TF' \
+    r'xsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAA' \
+    r'AAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXET' \
+    r'IjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVV' \
+    r'ZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2' \
+    r't7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD' \
+    r'8A39WuksNLlvLh/wB1FbGRyeqhRmqOtwatoWn+HtU1NdPk0vXwFt/schZ7eRhlVcng5X07' \
+    r'hvTnnPi5rMf2CHSYvMdZpRHdGLGUTOQPfOBx6VnfEDWNcg8B+CrzxB4Z/sFrp5bpbl4Ykl' \
+    r'LLgIgZAMIfPcqrHccHPqfGr1ZQkktj5nh7IKGMwVati4+9Je5vp5/N2+SPSHV02quAAPSi' \
+    r'o9Ov4tUsobuLd5UyK67hyAVBwfeivQSPy2ScG4yWqPLbm+eTXNdmlSOY+RO+2Rcrn9+P5A' \
+    r'D8Km8GfEPWviv4R0DQPEs6X+naTpty0CmMBmZfOVGc/wARVY0A9h6kmiim0nufvOGbjSgo' \
+    r'6aL8kdj8PG3aA0eAEhneJAOyjGBRRRQfj2bJLH1v8T/Q/9k='

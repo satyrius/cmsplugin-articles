@@ -6,10 +6,11 @@
   {% endblock %}
 
   {% block teaser_body %}
-    {% if article.image %}
-        {% thumbnail article.image 430x320 crop as image %}
-        <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" />
-    {% endif %}
+    {% with article|teaser_image as image %}
+      {% if image %}
+        <img src="{{ image.url }}" />
+      {% endif %}
+    {% endwith %}
     {{ article.teaser|safe }}
   {% endblock %}
 </div>

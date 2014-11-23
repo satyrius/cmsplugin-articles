@@ -57,7 +57,6 @@ setup(
         'django-cms',
         'Pillow',
         'beautifulsoup4',
-        'easy-thumbnails',
     ],
     tests_require=['tox>=1.8'],
     cmdclass={'test': Tox},

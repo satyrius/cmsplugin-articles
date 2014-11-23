@@ -1,4 +1,4 @@
-{% load article_tags thumbnail %}
+{% load article_tags %}
 <div class="article">
   {% block teaser_head %}
     <time datetime="{{ article|published_at|date:"Y-m-d" }}">{{ article|published_at|date:"d.m.Y" }}</time>

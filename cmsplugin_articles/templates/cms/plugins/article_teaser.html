@@ -1,4 +1,4 @@
-{% load article_tags %}
+{% load article_tags i18n %}
 <div class="article">
   {% block teaser_head %}
     <time datetime="{{ article|published_at|date:"Y-m-d" }}">{{ article|published_at|date:"d.m.Y" }}</time>
@@ -11,6 +11,9 @@
         <img src="{{ image.url }}" />
       {% endif %}
     {% endwith %}
-    {{ article.teaser|safe }}
+    <p>
+        {{ article|teaser_text }}
+        <a href="{{ article.get_absolute_url }}">{% trans "More" %}</a>
+    </p>
   {% endblock %}
 </div>

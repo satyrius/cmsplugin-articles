@@ -68,6 +68,20 @@ class TemplatetagsTest(TestCase):
         res = self._render(template, page=page).strip()
         self.assertEqual(res, teaser.image.url)
 
+    def test_teaser_text(self):
+        page = self._create_page('Green Sun\'s Zenith')
+        template = '{{ page|teaser_text }}'
+        res = self._render(template, page=page).strip()
+        self.assertEqual(res, '')
+
+        flavor = 'As the green sun crowned, Phyrexian prophecies glowed on ' \
+                 'the Tree of Tales.'
+        TeaserExtension.objects.create(
+            extended_object=page, description=flavor)
+
+        res = self._render(template, page=page).strip()
+        self.assertEqual(res, flavor)
+
 
 IMAGE = \
     r'/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZy' \

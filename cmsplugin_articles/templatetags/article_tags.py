@@ -30,3 +30,13 @@ def teaser_image(article_page):
     else:
         return teaser.image
     return None
+
+
+@register.filter()
+def teaser_text(article_page):
+    try:
+        teaser = article_page.teaserextension
+    except TeaserExtension.DoesNotExist:
+        return ''
+    else:
+        return teaser.description

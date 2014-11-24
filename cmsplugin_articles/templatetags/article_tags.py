@@ -1,5 +1,9 @@
+from bs4 import BeautifulSoup
+from cms.models import Placeholder
 from django import template
+from django.template import RequestContext
 from cmsplugin_articles.models import TeaserExtension
+from cmsplugin_articles import settings
 
 register = template.Library()
 
@@ -32,11 +36,25 @@ def teaser_image(article_page):
     return None
 
 
-@register.filter()
-def teaser_text(article_page):
+@register.simple_tag(takes_context=True)
+def teaser_text(context, article_page, default_from=None):
     try:
         teaser = article_page.teaserextension
     except TeaserExtension.DoesNotExist:
-        return ''
+        if default_from:
+            try:
+                placeholder = article_page.placeholders.get(slot=default_from)
+            except Placeholder.DoesNotExist:
+                pass
+            else:
+                request_context = RequestContext(context['request'])
+                html = placeholder.render(request_context, None)
+                soup = BeautifulSoup(html, 'html.parser')
+                paragraphs = u' '.join([
+                    unicode(p.string) for p in soup.find_all('p')])
+                cut = paragraphs[:settings.TEASER_CUT]
+                if cut:
+                    return cut + u'...'
     else:
         return teaser.description
+    return u''

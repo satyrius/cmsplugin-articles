@@ -1,15 +1,16 @@
 import base64
 import datetime as dt
-from cms.api import create_page
+from cms.api import create_page, add_plugin
+from cms.test_utils.testcases import CMSTestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.template import Template, Context
-from django.test import TestCase
 from freezegun import freeze_time
 
 from cmsplugin_articles.models import TeaserExtension
+from cmsplugin_articles import settings
 
 
-class TemplatetagsTest(TestCase):
+class TemplatetagsTest(CMSTestCase):
     def _create_page(self, title):
         data = {
             'title': title,
@@ -69,10 +70,26 @@ class TemplatetagsTest(TestCase):
         self.assertEqual(res, teaser.image.url)
 
     def test_teaser_text(self):
+        request = self.get_request(language='en')
+
         page = self._create_page('Green Sun\'s Zenith')
-        template = '{{ page|teaser_text }}'
+        placeholder = page.placeholders.create(slot='body')
+        text = '<p>Search your library for a green creature card with ' \
+               'converted mana cost X or less, put it onto the battlefield, ' \
+               'then shuffle your library. Shuffle Green Sun\'s Zenith into ' \
+               'its owner\'s library.</p>'
+        plugin = add_plugin(placeholder, 'TextPlugin', 'en', body=text)
+        self.assertEqual(plugin.placeholder, placeholder)
+
+        template = '{% teaser_text page %}'
         res = self._render(template, page=page).strip()
         self.assertEqual(res, '')
+
+        # Render default teaser text using page "body" placeholder
+        template2 = '{% teaser_text page "body" %}'
+        settings.TEASER_CUT = 10
+        res = self._render(template2, page=page, request=request).strip()
+        self.assertEqual(res, 'Search you...')
 
         flavor = 'As the green sun crowned, Phyrexian prophecies glowed on ' \
                  'the Tree of Tales.'

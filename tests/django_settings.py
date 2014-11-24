@@ -11,6 +11,7 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--nologcapture']
 
 MEDIA_ROOT = '/tmp/cmsplugin-articles/'
+ROOT_URLCONF = 'urls'
 
 DATABASES = {
     'default': {
@@ -24,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.sites',
     'django_nose',
+    'djangocms_text_ckeditor',
     'cms',
     'menus',
     'mptt',

@@ -12,7 +12,7 @@
       {% endif %}
     {% endwith %}
     <p>
-        {{ article|teaser_text }}
+        {% teaser_text article %}
         <a href="{{ article.get_absolute_url }}">{% trans "More" %}</a>
     </p>
   {% endblock %}

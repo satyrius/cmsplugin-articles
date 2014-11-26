@@ -10,6 +10,7 @@ class ArticlesPlugin(CMSPluginBase):
     model = Plugin
     name = _('Articles Plugin')
     render_template = 'cms/plugins/articles.html'
+    cache = False
 
     def get_articles_paginator(self, request, instance):
         articles = request.current_page.get_children().order_by(
@@ -25,7 +26,8 @@ class ArticlesPlugin(CMSPluginBase):
     def render(self, context, instance, placeholder):
         request = context['request']
         paginator = self.get_articles_paginator(request, instance)
-        page = paginator.page(self.get_page_number(request))
+        number = self.get_page_number(request)
+        page = paginator.page(number)
         context.update({
             'instance': instance,
             'paginator': paginator,

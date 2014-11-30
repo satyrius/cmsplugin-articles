@@ -21,10 +21,15 @@ class PluginTest(CMSTestCase):
         add_plugin(placeholder, 'ArticlesPlugin', 'en', limit=limit)
         return page, placeholder
 
-    def _render(self, placeholder, page_num=None):
+    def _render(self, placeholder, page_num=None, draft=True):
+        page = placeholder.page.reload()
+        self.assertTrue(page.publisher_is_draft)
+        if not draft:
+            page = page.publisher_draft
+            self.assertFalse(page.publisher_is_draft)
         request = self.get_request(
             language='en',
-            page=placeholder.page.reload())
+            page=page)
         if page_num is not None:
             request.GET._mutable = True
             request.GET['page'] = str(page_num)
@@ -32,8 +37,8 @@ class PluginTest(CMSTestCase):
         request_context = RequestContext(request)
         return placeholder.render(request_context, None)
 
-    def _get_titles(self, placeholder, page_num=None):
-        html = self._render(placeholder, page_num=page_num)
+    def _get_titles(self, placeholder, page_num=None, draft=True):
+        html = self._render(placeholder, page_num=page_num, draft=draft)
         soup = BeautifulSoup(html, 'html.parser')
         return {h.string for h in soup.find_all('h2')}
 
@@ -63,3 +68,15 @@ class PluginTest(CMSTestCase):
         # And the oldest particle on the second page
         titles = self._get_titles(body, page_num=2)
         self.assertEqual(titles, {'Article 1'})
+
+    def test_unpublished_articles(self):
+        blog1, body = self._create_blog('Blog 1')
+        self._create_page('Article 1', parent=blog1)
+        self._create_page('Article 2', parent=blog1, published=False)
+        self._create_page('Article 3', parent=blog1)
+
+        draft_titles = self._get_titles(body)
+        self.assertEqual(draft_titles, {'Article 1', 'Article 2', 'Article 3'})
+
+        published_titles = self._get_titles(body, draft=False)
+        self.assertEqual(published_titles, {'Article 1', 'Article 3'})

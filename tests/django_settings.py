@@ -8,7 +8,7 @@ SITE_ID = 1
 
 SOUTH_TESTS_MIGRATE = True
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-NOSE_ARGS = ['--nologcapture']
+NOSE_ARGS = ['--nologcapture', '--with-id']
 
 MEDIA_ROOT = '/tmp/cmsplugin-articles/'
 ROOT_URLCONF = 'urls'

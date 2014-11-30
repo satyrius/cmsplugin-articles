@@ -6,3 +6,6 @@ messages:
 
 compile:
 	cd cmsplugin_articles && django-admin.py compilemessages
+
+migration:
+	django-admin.py schemamigration cmsplugin_articles --auto || true

@@ -11,9 +11,9 @@ class ArticlesPlugin(CMSPlugin):
 
 
 class TeaserExtension(PageExtension):
-    title = models.CharField(_('title'), max_length=255, blank=True, null=True)
+    title = models.CharField(_('Title'), max_length=255, blank=True, null=True)
     image = models.ImageField(
-        _('image'), upload_to='teaser', blank=True, null=True)
-    description = models.TextField(_('description'), blank=True, null=True)
+        _('Image'), upload_to='teaser', blank=True, null=True)
+    description = models.TextField(_('Description'), blank=True, null=True)
 
 extension_pool.register(TeaserExtension)

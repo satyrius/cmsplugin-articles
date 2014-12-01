@@ -24,7 +24,7 @@ Installation
 
 ::
 
--e git+https://github.com/satyrius/cmsplugin-articles.git@master#egg=cmsplugin_article
+$ pip install cmsplugin-articles
 
 Configure installed apps in your ``settings.py`` ::
 

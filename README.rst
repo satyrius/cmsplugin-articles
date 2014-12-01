@@ -4,7 +4,7 @@ cmsplugin-articles
 .. image:: https://travis-ci.org/satyrius/cmsplugin-articles.svg?branch=master
   :target: https://travis-ci.org/satyrius/cmsplugin-articles
 
-It is a simple plugin that allows you to organize you article pages in a manner of a blog. 
+It is a simple plugin that allows you to organize you article pages in a manner of a blog.
 It does not break original page publishing workflow, but has some tricks to gather articles into a blog app.
 
 Requirements
@@ -19,8 +19,6 @@ It works fine and tested under ``Python 2.7``. The following libraries are requi
 
 Installation
 ============
-
-**WARNING this plugin is under development**
 
 ::
 

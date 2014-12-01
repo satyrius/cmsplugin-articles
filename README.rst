@@ -10,8 +10,6 @@ It does not break original page publishing workflow, but has some tricks to gath
 Requirements
 ============
 
-Python
-------
 It works fine and tested under ``Python 2.7``. The following libraries are required
 
 - ``Django`` 1.5 or 1.6

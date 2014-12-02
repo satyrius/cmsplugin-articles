@@ -1,8 +1,19 @@
 ==================
 cmsplugin-articles
 ==================
-.. image:: https://travis-ci.org/satyrius/cmsplugin-articles.svg?branch=master
-  :target: https://travis-ci.org/satyrius/cmsplugin-articles
+
+|ci| |pypi| |status|
+
+.. |ci| image:: https://travis-ci.org/satyrius/cmsplugin-articles.svg?branch=master
+    :target: https://travis-ci.org/satyrius/cmsplugin-articles
+    
+.. |pypi| image:: https://pypip.in/version/cmsplugin-articles/badge.png?text=pypi
+    :target: https://pypi.python.org/pypi/cmsplugin-articles/
+    :alt: Latest Version
+    
+.. |status| image:: https://pypip.in/status/cmsplugin-articles/badge.png
+    :target: https://pypi.python.org/pypi/cmsplugin-articles/
+    :alt: Development Status
 
 It is a simple plugin that allows you to organize you article pages in a manner of a blog.
 It does not break original page publishing workflow, but has some tricks to gather articles into a blog app.

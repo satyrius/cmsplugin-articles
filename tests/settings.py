@@ -6,7 +6,6 @@ LANGUAGE_CODE = 'en'
 SECRET_KEY = 'ji2r2iGkZqJVbWDhXrgDKDR2qG#mmtvBZXPXDugA4H)KFLwLHy'
 SITE_ID = 1
 
-SOUTH_TESTS_MIGRATE = True
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--nologcapture', '--with-id']
 
@@ -29,7 +28,6 @@ INSTALLED_APPS = [
     'cms',
     'menus',
     'mptt',
-    'south',
     'cmsplugin_articles',
 ]
 

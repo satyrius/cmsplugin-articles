@@ -6,11 +6,11 @@ cmsplugin-articles
 
 .. |ci| image:: https://travis-ci.org/satyrius/cmsplugin-articles.svg?branch=master
     :target: https://travis-ci.org/satyrius/cmsplugin-articles
-    
+
 .. |pypi| image:: https://pypip.in/version/cmsplugin-articles/badge.png?text=pypi
     :target: https://pypi.python.org/pypi/cmsplugin-articles/
     :alt: Latest Version
-    
+
 .. |status| image:: https://pypip.in/status/cmsplugin-articles/badge.png
     :target: https://pypi.python.org/pypi/cmsplugin-articles/
     :alt: Development Status
@@ -23,7 +23,7 @@ Requirements
 
 It works fine and tested under ``Python 2.7``. The following libraries are required
 
-- ``Django`` 1.5 or 1.6
+- ``Django`` >= 1.5
 - ``django-cms`` >= 3.0 (we recommend to use Django CMS 3.0 and higher, contact us if you need prior CMS versions supports and have some issues)
 
 Installation
@@ -57,7 +57,7 @@ You can customize this plugin by overriding the following templates
 Roadmap
 =======
 - Translations
-- Django 1.7 and Python 3 support
+- Python 3 support
 
 Usage
 =====

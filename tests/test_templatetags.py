@@ -1,5 +1,7 @@
 import base64
 import datetime as dt
+import unittest
+
 from cms.api import create_page, add_plugin
 from cms.test_utils.testcases import CMSTestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -7,6 +9,7 @@ from django.template import Template, Context
 from freezegun import freeze_time
 
 from cmsplugin_articles.models import TeaserExtension
+from cmsplugin_articles.templatetags.article_tags import exact_columns
 from cmsplugin_articles import settings
 
 
@@ -98,6 +101,14 @@ class TemplatetagsTest(CMSTestCase):
 
         res = self._render(template, page=page).strip()
         self.assertEqual(res, flavor)
+
+
+class ColumnsLayoutTest(unittest.TestCase):
+    def test_exact_columns(self):
+        # Divide a list of eight by a three columns
+        self.assertEqual(
+            exact_columns([1, 2, 3, 4, 5, 6, 7, 8], 3),
+            [[1, 2, 3], [4, 5, 6], [7, 8]])
 
 
 IMAGE = \

@@ -1,3 +1,4 @@
 include LICENSE
 include README.rst
 recursive-include cmsplugin_articles/templates *.html
+recursive-include cmsplugin_articles/locale *.po *.mo

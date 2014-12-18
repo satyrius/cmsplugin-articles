@@ -104,23 +104,32 @@ class TemplatetagsTest(CMSTestCase):
 
 
 class ColumnsLayoutTest(unittest.TestCase):
-    def test_exact_columns(self):
-        # Divide a list of eight by a three columns
+    def test_exact_columns_vertical(self):
         self.assertEqual(
             exact_columns([1, 2, 3, 4, 5, 6, 7, 8], 3, mode='vertical'),
             [[1, 2, 3], [4, 5, 6], [7, 8]])
 
-        # Divide a list of eight by a three columns
         self.assertEqual(
-            exact_columns([1, 2, 3, 4, 5, 6, 7, 8], 3, mode='horizontal'),
-            [[1, 4, 7], [2, 5, 8], [3, 6]])
+            exact_columns([1, 2, 3, 4, 5, 6, 7, 8], 2, mode='vertical'),
+            [[1, 2, 3, 4], [5, 6, 7, 8]])
 
-        # Divide a list of two by a three columns
+        self.assertEqual(
+            exact_columns([1, 2, 3, 4], 3, mode='vertical'),
+            [[1, 2], [3], [4]])
+
         self.assertEqual(
             exact_columns([1, 2], 3, mode='vertical'),
             [[1], [2], []])
 
-        # Divide a list of two by a three columns
+    def test_exact_columns_horizontal(self):
+        self.assertEqual(
+            exact_columns([1, 2, 3, 4, 5, 6, 7, 8], 3, mode='horizontal'),
+            [[1, 4, 7], [2, 5, 8], [3, 6]])
+
+        self.assertEqual(
+            exact_columns([1, 2, 3, 4], 3, mode='horizontal'),
+            [[1, 4], [2], [3]])
+
         self.assertEqual(
             exact_columns([1, 2], 3, mode='horizontal'),
             [[1], [2], []])

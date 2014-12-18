@@ -1,4 +1,5 @@
-from itertools import cycle, izip_longest
+from itertools import cycle
+from math import ceil
 
 from bs4 import BeautifulSoup
 from cms.models import Placeholder
@@ -79,14 +80,30 @@ def exact_columns(items, number_of_columns, mode='vertical'):
     """
     assert mode in ['vertical', 'horizontal']
     number_of_columns = int(number_of_columns)
+    assert number_of_columns > 0
     items = list(items)
+    if number_of_columns == 1:
+        return items
 
-    if mode == 'horizontal' or len(items) < number_of_columns:
-        columns = [[] for x in range(number_of_columns)]
+    size = len(items)
+    columns = [[] for x in range(number_of_columns)]
+    if mode == 'horizontal' or size < number_of_columns:
         actual_column = cycle(range(number_of_columns))
         for item in items:
             columns[actual_column.next()].append(item)
-        return columns
     else:
-        args = [iter(items)] * number_of_columns
-        return [filter(None, list(col)) for col in izip_longest(*args)]
+        max_row = int(ceil(float(size) / number_of_columns))
+        rem = size % number_of_columns
+        for r in range(max_row):
+            for col in range(number_of_columns):
+                i = (col * max_row) + r
+                if rem > 0:
+                    if r == max_row - 1 and col >= rem:
+                        break
+                    i -= max(0, col - rem)
+                try:
+                    item = items[i]
+                except IndexError:
+                    break
+                columns[col].append(item)
+    return columns

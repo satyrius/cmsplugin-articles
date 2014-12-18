@@ -104,22 +104,32 @@ class TemplatetagsTest(CMSTestCase):
 
 
 class ColumnsLayoutTest(unittest.TestCase):
-    def test_exact_columns_vertical(self):
+    def test_exact_columns_vertical_even(self):
+        self.assertEqual(
+            exact_columns([1, 2, 3, 4, 5, 6, 7, 8], 2, mode='vertical'),
+            [[1, 2, 3, 4], [5, 6, 7, 8]])
+
+    def test_exact_columns_vertical_not_enough_elements(self):
+        self.assertEqual(
+            exact_columns([1, 2], 3, mode='vertical'),
+            [[1], [2], []])
+
+    def test_exact_columns_vertical_justify(self):
         self.assertEqual(
             exact_columns([1, 2, 3, 4, 5, 6, 7, 8], 3, mode='vertical'),
             [[1, 2, 3], [4, 5, 6], [7, 8]])
 
         self.assertEqual(
-            exact_columns([1, 2, 3, 4, 5, 6, 7, 8], 2, mode='vertical'),
-            [[1, 2, 3, 4], [5, 6, 7, 8]])
+            exact_columns([1, 2, 3, 4, 5, 6, 7, 8, 9], 4, mode='vertical'),
+            [[1, 2, 3], [4, 5], [6, 7], [8, 9]])
+
+        self.assertEqual(
+            exact_columns([1, 2, 3, 4, 5], 4, mode='vertical'),
+            [[1, 2], [3], [4], [5]])
 
         self.assertEqual(
             exact_columns([1, 2, 3, 4], 3, mode='vertical'),
             [[1, 2], [3], [4]])
-
-        self.assertEqual(
-            exact_columns([1, 2], 3, mode='vertical'),
-            [[1], [2], []])
 
     def test_exact_columns_horizontal(self):
         self.assertEqual(

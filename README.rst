@@ -53,6 +53,24 @@ You can customize this plugin by overriding the following templates
 - ``cms/plugins/article_teaser.html`` (if you want to change teaser template, e.g. use `easy-thumbnails` for teaser images)
 - ``cms/plugins/articles_pagination.html`` (pagination templates, if you want to add extra css classes or so)
 
+Templatetags
+------------
+
+The plugin has a number of ``temlatetags`` used for teaser template, you should load them in your template 
+with 
+
+::
+
+{% load article_tags %}
+
+published_at, teaser_title and teaser_image
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Filters which get article ``Page`` instance as an argument
+
+- ``published_at`` return ``datetime`` object for publication time
+- ``teaser_title`` return teaser title as a string
+- ``teaser_image`` return ``TeaserExtension.image`` if exists
 
 Roadmap
 =======

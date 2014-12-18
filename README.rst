@@ -44,6 +44,13 @@ Migrate your database ::
 
   django-admin.py migrate cmsplugin_articles
 
+Usage
+=====
+
+- Create a page in a common way, it will be a root page, an articles list;
+- Add ``ArticlesPlugin`` to the page to you content placeholder, this will show a list of published articles;
+- Create an article page as a child page, it will be shown automatocally in the list.
+
 Customization
 =============
 
@@ -99,15 +106,7 @@ You can use this filter if you want multicolumn layout, e.g
 
 Roadmap
 =======
-- Translations
 - Python 3 support
-
-Usage
-=====
-
-- Create a page in a common way, it will be a root page, an articles list;
-- Add ``ArticlesPlugin`` to the page to you content placeholder, this will show a list of published articles;
-- Create an article page as a child page, it will be shown automatocally in the list.
 
 Changelog
 =========

@@ -1,7 +1,10 @@
+from itertools import cycle, izip_longest
+
 from bs4 import BeautifulSoup
 from cms.models import Placeholder
 from django import template
 from django.template import RequestContext
+
 from cmsplugin_articles.models import TeaserExtension
 from cmsplugin_articles import settings
 
@@ -58,3 +61,32 @@ def teaser_text(context, article_page, default_from=None):
     else:
         return teaser.description
     return u''
+
+
+@register.filter
+def exact_columns(items, number_of_columns, mode='vertical'):
+    """Divides a list into an exact number of columns.
+    The number of columns is guaranteed.
+
+    The `mode` affects how columns will be filled. For example, we have a list
+    [1, 2, 3, 4, 5, 6, 7, 8] and want to split it into a three columns.
+
+    The `vertical` mode result will be:
+        [[1, 2, 3], [4, 5, 6], [7, 8]]
+
+    The `horizontal` mode result will be:
+        [[1, 4, 7], [2, 5, 8], [3, 6]]
+    """
+    assert mode in ['vertical', 'horizontal']
+    number_of_columns = int(number_of_columns)
+    items = list(items)
+
+    if mode == 'horizontal' or len(items) < number_of_columns:
+        columns = [[] for x in range(number_of_columns)]
+        actual_column = cycle(range(number_of_columns))
+        for item in items:
+            columns[actual_column.next()].append(item)
+        return columns
+    else:
+        args = [iter(items)] * number_of_columns
+        return [filter(None, list(col)) for col in izip_longest(*args)]

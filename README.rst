@@ -44,6 +44,13 @@ Migrate your database ::
 
   django-admin.py migrate cmsplugin_articles
 
+Usage
+=====
+
+- Create a page in a common way, it will be a root page, an articles list;
+- Add ``ArticlesPlugin`` to the page to you content placeholder, this will show a list of published articles;
+- Create an article page as a child page, it will be shown automatocally in the list.
+
 Customization
 =============
 
@@ -53,18 +60,53 @@ You can customize this plugin by overriding the following templates
 - ``cms/plugins/article_teaser.html`` (if you want to change teaser template, e.g. use `easy-thumbnails` for teaser images)
 - ``cms/plugins/articles_pagination.html`` (pagination templates, if you want to add extra css classes or so)
 
+Templatetags
+------------
+
+The plugin has a number of `temlatetags <https://github.com/satyrius/cmsplugin-articles/blob/master/cmsplugin_articles/templatetags/article_tags.py>`_ used for teaser template, you should load them in your template 
+with 
+
+::
+
+{% load article_tags %}
+
+published_at, teaser_title and teaser_image
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Filters which get article ``Page`` instance as an argument
+
+- ``published_at`` return ``datetime`` object for publication time
+- ``teaser_title`` return teaser title as a string
+- ``teaser_image`` return ``TeaserExtension.image`` if exists
+
+teaser_text
+~~~~~~~~~~~
+
+A ``simple_tag`` which returns a teaser text. It accepts two parameters
+
+- ``article_page`` the page that teaser belongs to
+- ``default_from`` the placeholder name. You can pass it if you want generate teasers automaticaly
+
+exact_columns
+~~~~~~~~~~~~~
+
+You can use this filter if you want multicolumn layout, e.g
+
+::
+
+  <div class="row">
+    {% for column in articles|exact_columns:2 %}
+      <div class="col_6">
+        {% for article in column %}
+          {% include "cms/plugins/article_teaser.html" %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
 
 Roadmap
 =======
-- Translations
 - Python 3 support
-
-Usage
-=====
-
-- Create a page in a common way, it will be a root page, an articles list;
-- Add ``ArticlesPlugin`` to the page to you content placeholder, this will show a list of published articles;
-- Create an article page as a child page, it will be shown automatocally in the list.
 
 Changelog
 =========

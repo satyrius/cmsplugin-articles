@@ -72,6 +72,14 @@ Filters which get article ``Page`` instance as an argument
 - ``teaser_title`` return teaser title as a string
 - ``teaser_image`` return ``TeaserExtension.image`` if exists
 
+teaser_text
+~~~~~~~~~~~
+
+A ``simple_tag`` which returns a teaser text. It accepts two parameters
+
+- ``article_page`` the page that teaser belongs to
+- ``default_from`` the placeholder name. You can pass it if you want generate teasers automaticaly
+
 Roadmap
 =======
 - Translations

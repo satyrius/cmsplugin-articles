@@ -56,7 +56,7 @@ You can customize this plugin by overriding the following templates
 Templatetags
 ------------
 
-The plugin has a number of ``temlatetags`` used for teaser template, you should load them in your template 
+The plugin has a number of `temlatetags <https://github.com/satyrius/cmsplugin-articles/blob/master/cmsplugin_articles/templatetags/article_tags.py>`_ used for teaser template, you should load them in your template 
 with 
 
 ::
@@ -79,6 +79,23 @@ A ``simple_tag`` which returns a teaser text. It accepts two parameters
 
 - ``article_page`` the page that teaser belongs to
 - ``default_from`` the placeholder name. You can pass it if you want generate teasers automaticaly
+
+exact_columns
+~~~~~~~~~~~~~
+
+You can use this filter if you want multicolumn layout, e.g
+
+::
+
+  <div class="row">
+    {% for column in articles|exact_columns:2 %}
+      <div class="col_6">
+        {% for article in column %}
+          {% include "cms/plugins/article_teaser.html" %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
 
 Roadmap
 =======

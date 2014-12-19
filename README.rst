@@ -90,12 +90,13 @@ A ``simple_tag`` which returns a teaser text. It accepts two parameters
 exact_columns
 ~~~~~~~~~~~~~
 
-You can use this filter if you want multicolumn layout, e.g
+You can use this template tag to split articles list into a column layout, e.g
 
 ::
 
   <div class="row">
-    {% for column in articles|exact_columns:2 %}
+    {% exact_columns articles 3 "vertical" as columns %}
+    {% for column in columns %}
       <div class="col_6">
         {% for article in column %}
           {% include "cms/plugins/article_teaser.html" %}

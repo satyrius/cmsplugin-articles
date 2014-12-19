@@ -64,7 +64,7 @@ def teaser_text(context, article_page, default_from=None):
     return u''
 
 
-@register.filter
+@register.assignment_tag
 def exact_columns(items, number_of_columns, mode='vertical'):
     """Divides a list into an exact number of columns.
     The number of columns is guaranteed.

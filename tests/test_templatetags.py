@@ -2,6 +2,7 @@ import base64
 import datetime as dt
 import unittest
 
+from bs4 import BeautifulSoup
 from cms.api import create_page, add_plugin
 from cms.test_utils.testcases import CMSTestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -101,6 +102,52 @@ class TemplatetagsTest(CMSTestCase):
 
         res = self._render(template, page=page).strip()
         self.assertEqual(res, flavor)
+
+    def test_exact_columns_vertical(self):
+        lst = [1, 2, 3, 4]
+        template = '''
+            {% exact_columns values 3 as columns %}
+            {% for column in columns %}
+                <div class="col">
+                    {% for item in column %}
+                        <div class="item">{{ item }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        '''
+        html = self._render(template, values=lst)
+        soup = BeautifulSoup(html, 'html.parser')
+        cols = soup.select('.col')
+
+        def get_items(col):
+            return [int(i.string) for i in col.select('.item')]
+
+        self.assertEqual(get_items(cols[0]), [1, 2])
+        self.assertEqual(get_items(cols[1]), [3])
+        self.assertEqual(get_items(cols[2]), [4])
+
+    def test_exact_columns_horizontal(self):
+        lst = [1, 2, 3, 4]
+        template = '''
+            {% exact_columns values 3 "horizontal" as columns %}
+            {% for column in columns %}
+                <div class="col">
+                    {% for item in column %}
+                        <div class="item">{{ item }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        '''
+        html = self._render(template, values=lst)
+        soup = BeautifulSoup(html, 'html.parser')
+        cols = soup.select('.col')
+
+        def get_items(col):
+            return [int(i.string) for i in col.select('.item')]
+
+        self.assertEqual(get_items(cols[0]), [1, 4])
+        self.assertEqual(get_items(cols[1]), [2])
+        self.assertEqual(get_items(cols[2]), [3])
 
 
 class ColumnsLayoutTest(unittest.TestCase):

@@ -4,7 +4,7 @@ cmsplugin-articles
 
 |ci| |pypi| |status|
 
-.. |ci| image:: https://travis-ci.org/satyrius/cmsplugin-articles.svg?branch=master
+.. |ci| image:: https://travis-ci.org/satyrius/cmsplugin-articles.png?branch=master
     :target: https://travis-ci.org/satyrius/cmsplugin-articles
 
 .. |pypi| image:: https://pypip.in/version/cmsplugin-articles/badge.png?text=pypi
@@ -63,8 +63,8 @@ You can customize this plugin by overriding the following templates
 Templatetags
 ------------
 
-The plugin has a number of `temlatetags <https://github.com/satyrius/cmsplugin-articles/blob/master/cmsplugin_articles/templatetags/article_tags.py>`_ used for teaser template, you should load them in your template 
-with 
+The plugin has a number of `temlatetags <https://github.com/satyrius/cmsplugin-articles/blob/master/cmsplugin_articles/templatetags/article_tags.py>`_ used for teaser template, you should load them in your template
+with
 
 ::
 

@@ -116,3 +116,7 @@ The changelog can be found at `repo's release notes <https://github.com/satyrius
 Contributing
 ============
 Fork the repo, create a feature branch then send me pull request. Feel free to create new issues or contact me via email.
+
+Translation
+-----------
+You could also help me to translate `cmsplugin-articles` to your native language `with Transifex <https://www.transifex.com/projects/p/cmsplugin-articles/resource/main/>`_

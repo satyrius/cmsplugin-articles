@@ -7,11 +7,11 @@ cmsplugin-articles
 .. |ci| image:: https://travis-ci.org/satyrius/cmsplugin-articles.png?branch=master
     :target: https://travis-ci.org/satyrius/cmsplugin-articles
 
-.. |pypi| image:: https://pypip.in/version/cmsplugin-articles/badge.png?text=pypi
+.. |pypi| image:: https://img.shields.io/pypi/v/cmsplugin-articles.svg?label=pypi
     :target: https://pypi.python.org/pypi/cmsplugin-articles/
     :alt: Latest Version
 
-.. |status| image:: https://pypip.in/status/cmsplugin-articles/badge.png
+.. |status| image:: https://img.shields.io/pypi/status/cmsplugin-articles.svg
     :target: https://pypi.python.org/pypi/cmsplugin-articles/
     :alt: Development Status
 
